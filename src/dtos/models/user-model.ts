@@ -13,6 +13,9 @@ export class User {
 
   @Field()
   password: string;
+
+  @Field()
+  img: string;
 }
 
 @ObjectType()
@@ -31,4 +34,7 @@ export class UserAuthenticated {
 
   @Field()
   token: string;
+
+  @Field()
+  img: string;
 }

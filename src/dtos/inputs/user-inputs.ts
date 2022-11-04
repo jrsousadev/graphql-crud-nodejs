@@ -10,6 +10,9 @@ export class CreateUserInput {
 
   @Field()
   password: string;
+
+  @Field({ nullable: true })
+  img?: string;
 }
 
 @InputType()
@@ -26,12 +29,15 @@ export class UpdateUserInput {
   @Field()
   id: string;
 
-  @Field(({ nullable: true }))
+  @Field({ nullable: true })
   email?: string;
 
-  @Field(({ nullable: true }))
+  @Field({ nullable: true })
   name?: string;
 
-  @Field(({ nullable: true }))
+  @Field({ nullable: true })
   password?: string;
+
+  @Field({ nullable: true })
+  img?: string;
 }

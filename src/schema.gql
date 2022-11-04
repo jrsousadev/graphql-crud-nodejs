@@ -10,6 +10,7 @@ input AuthenticateUserInput {
 
 input CreateUserInput {
   email: String!
+  img: String
   name: String!
   password: String!
 }
@@ -29,6 +30,7 @@ type Query {
 input UpdateUserInput {
   email: String
   id: String!
+  img: String
   name: String
   password: String
 }
@@ -36,6 +38,7 @@ input UpdateUserInput {
 type User {
   email: String!
   id: String!
+  img: String!
   name: String!
   password: String!
 }
@@ -43,6 +46,7 @@ type User {
 type UserAuthenticated {
   email: String!
   id: String!
+  img: String!
   name: String!
   password: String!
   token: String!

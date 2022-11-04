@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   name     String
-  email    String @unique
+  email    String  @unique
   password String
+  img      String? @default("https://www.fiscalti.com.br/wp-content/uploads/2021/02/default-user-image-365x365.png")
 
   @@map("Users")
 }

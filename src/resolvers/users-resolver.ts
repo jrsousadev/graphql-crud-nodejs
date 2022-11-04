@@ -32,21 +32,21 @@ export class UserResolvers {
         },
       });
 
-      if (!user) throw new Error("Email or password is not exist!");
+      if (!user) throw new Error("EMAIL_OR_PASSWORD_INVALID");
 
       const correctPassword = await bcryptjs.authenticate(
         data.password,
         user.password
       );
 
-      if (!correctPassword) throw new Error("Email or password is not exist!");
+      if (!correctPassword) throw new Error("EMAIL_OR_PASSWORD_INVALID");
 
       return {
         ...user,
         token: base64(generateToken(user)),
       };
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
@@ -81,7 +81,7 @@ export class UserResolvers {
   @Mutation(() => User)
   @UseMiddleware(isAuthenticated)
   async updateUser(
-    @Arg("data") { email, id, name, password }: UpdateUserInput
+    @Arg("data") { email, id, name, password, img }: UpdateUserInput
   ) {
     try {
       const userExist = await prismaClient.user.findFirst({
@@ -100,6 +100,7 @@ export class UserResolvers {
           email,
           name,
           password: password && bcryptjs.encryptPassword(password),
+          img,
         },
       });
     } catch (err) {
