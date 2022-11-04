@@ -1,8 +1,8 @@
 {
-  "name": "graphql-crud-nodejs",
+  "name": "api-graphql",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/jrsousadev/graphql-crud-nodejs.git",
+  "repository": "https://github.com/jrsousadev/api-graphql.git",
   "author": "Junior Sousa <jrsousadev@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -14,10 +14,12 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@prisma/client": "^4.5.0",
     "apollo-server": "^3.10.2",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.2",
     "graphql": "^15.3.0",
+    "prisma": "^4.5.0",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1"
   }
