@@ -1,2 +1,6 @@
 node_modules
+dist
+_update-notifier-last-checked
+_logs
+_cacache
 .env
