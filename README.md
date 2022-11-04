@@ -1,2 +1,2 @@
-# 👨 CRUD GraphQL with Authentication
+# 👨 CRUD GraphQL with Type-GrapQL and Authentication
 
