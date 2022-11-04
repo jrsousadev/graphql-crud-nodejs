@@ -9,16 +9,16 @@ import { resolvers } from "./resolvers/all-resolvers";
 const main = async () => {
   const schema = await buildSchema({
     resolvers: resolvers,
-    emitSchemaFile: path.resolve(__dirname, "schema.gql"),
-  });
+    emitSchemaFile: path.resolve(__dirname, "schema.gql")
+  })
 
   const server = new ApolloServer({
     schema,
   });
 
-  const { port } = await server.listen();
+  const { port } = await server.listen(4000);
 
   console.log(`🚀 HTTP server running on PORT ${port}`);
-};
+}
 
 main();
