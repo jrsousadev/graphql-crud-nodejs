@@ -1,42 +1,18 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
-import { randomUUID } from "node:crypto";
+import { Resolver, Query, Mutation, Arg, UseMiddleware } from "type-graphql";
 import { User, UserAuthenticated } from "../dtos/models/user-model";
+import { generateToken } from "../auth/generateToken";
+import { base64 } from "../auth/base64";
 import { bcryptjs } from "../utils/bcryptjs";
+import { prismaClient } from "../database/prismaClient";
+import { isAuthenticated } from "../middlewares/isAuthenticated";
 import {
   AuthenticateUserInput,
   CreateUserInput,
   UpdateUserInput,
 } from "../dtos/inputs/user-inputs";
-import { prismaClient } from "../database/prismaClient";
 
 @Resolver(() => User)
 export class UserResolvers {
-  @Query(() => [User])
-  async getUsers() {
-    try {
-      return await prismaClient.user.findMany({});
-    } catch (err) {
-      throw err;
-    }
-  }
-
-  @Query(() => User)
-  async getOneUser(@Arg("id") id: string) {
-    try {
-      const user = await prismaClient.user.findFirst({
-        where: {
-          id,
-        },
-      });
-
-      if (!user) throw new Error("User is not exist");
-
-      return user;
-    } catch (err) {
-      throw err;
-    }
-  }
-
   @Mutation(() => User)
   async createUser(@Arg("data") data: CreateUserInput) {
     try {
@@ -67,14 +43,43 @@ export class UserResolvers {
 
       return {
         ...user,
-        token: randomUUID(),
+        token: base64(generateToken(user)),
       };
     } catch (err) {
       throw err;
     }
   }
 
+  @Query(() => [User])
+  @UseMiddleware(isAuthenticated)
+  async getUsers() {
+    try {
+      return await prismaClient.user.findMany({});
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @Query(() => User)
+  @UseMiddleware(isAuthenticated)
+  async getOneUser(@Arg("id") id: string) {
+    try {
+      const user = await prismaClient.user.findFirst({
+        where: {
+          id,
+        },
+      });
+
+      if (!user) throw new Error("User is not exist");
+
+      return user;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   @Mutation(() => User)
+  @UseMiddleware(isAuthenticated)
   async updateUser(
     @Arg("data") { email, id, name, password }: UpdateUserInput
   ) {
@@ -103,6 +108,7 @@ export class UserResolvers {
   }
 
   @Query(() => Boolean)
+  @UseMiddleware(isAuthenticated)
   async deleteUser(@Arg("id") id: string) {
     try {
       const user = await prismaClient.user.findFirst({
