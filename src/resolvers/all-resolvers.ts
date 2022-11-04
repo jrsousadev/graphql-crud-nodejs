@@ -1,5 +1,5 @@
-import { userAllResolvers } from "./user-resolvers/user-all-resolvers";
+import { UserResolvers } from "./users-resolver";
 
 export const resolvers: any = [
-  userAllResolvers
+  UserResolvers
 ]
